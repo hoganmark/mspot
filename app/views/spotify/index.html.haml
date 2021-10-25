@@ -5,14 +5,18 @@ hello, #{@spotify_user.email}
 = link_to 'logout', '/logout'
 
 %p
-= link_to 'create a random playlist', '/create_playlist', method: :post
+- player = @spotify_user.player
+- if player
+  %p
+  currently playing:
+  - current = @spotify_user.player.currently_playing
+  = current.name
+  by
+  = current.artists.first.name
+  = link_to 'pause', '/pause'
 
 %p
-currently playing:
-- current = @spotify_user.player.currently_playing
-= current.name
-by
-= current.artists.first.name
+= link_to 'create a random playlist', '/create_playlist', method: :post
 
 %p
 last played:
