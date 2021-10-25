@@ -8,6 +8,8 @@ class SpotifyController < ApplicationController
 
   def logout
     session[:user_id] = nil
+
+    redirect_to action: :connect
   end
 
   def callback
