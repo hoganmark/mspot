@@ -1,4 +1,6 @@
 class SpotifyController < ApplicationController
+  before_action :check_for_user, except: %i[connect callback]
+
   def connect
     if user
       redirect_to action: :index
@@ -22,18 +24,26 @@ class SpotifyController < ApplicationController
   end
 
   def index
-    if user.nil?
-      redirect_to action: :connect
-      return
-    end
-
     @spotify_user = user.spotify_user
   end
+
+  def create_playlist
+    playlist = user.spotify_user.create_playlist! "random#{Time.current.to_i}"
+    playlist.add_tracks! user.spotify_user.playlists.map(&:tracks).map(&:sample).compact
+
+    redirect_to action: :index
+  end
+
+  private
 
   def user
     return @user if @user
 
     user_id = session[:user_id]
     @user = User.find_by(id: user_id) if user_id
+  end
+
+  def check_for_user
+    redirect_to action: :connect if user.nil?
   end
 end

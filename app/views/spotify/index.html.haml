@@ -2,6 +2,12 @@
 hello, #{@spotify_user.email}
 
 %p
+= link_to 'logout', '/logout'
+
+%p
+= link_to 'create a random playlist', '/create_playlist', method: :post
+
+%p
 these are your playlists:
 - @spotify_user.playlists.each do |playlist|
   %p
@@ -15,6 +21,3 @@ these are your playlists:
       = artist.name
     %br/
     = link_to 'listen', track.external_urls.values.first
-
-%p
-= link_to 'logout', '/logout'
