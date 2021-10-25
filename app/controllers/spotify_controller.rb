@@ -13,10 +13,9 @@ class SpotifyController < ApplicationController
   end
 
   def callback
-    auth_hash = request.env['omniauth.auth']
-    @spotify_user = RSpotify::User.new auth_hash
+    @spotify_user = RSpotify::User.new request.env['omniauth.auth']
     user = User.find_or_create_by email: @spotify_user.email
-    user.update! auth_hash: auth_hash.to_h, userid: @spotify_user.id
+    user.update! auth_hash: @spotify_user.to_hash, userid: @spotify_user.id
     session[:user_id] = user.id
 
     redirect_to action: :index
