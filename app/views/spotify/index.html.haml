@@ -4,11 +4,12 @@ hello, #{@spotify_user.email}
 %p
 these are your playlists:
 - @spotify_user.playlists.each do |playlist|
-  %p/
+  %p
   = playlist.name
   - playlist.tracks.each do |track|
-    %br/
+    %p
     = track.name
+    %br/
     - track.artists.each do |artist|
       by
       = artist.name
