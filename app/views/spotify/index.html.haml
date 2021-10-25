@@ -4,8 +4,14 @@ hello, #{@spotify_user.email}
 %p
 these are your playlists:
 - @spotify_user.playlists.each do |playlist|
-  %br/
+  %p/
   = playlist.name
+  - playlist.tracks.each do |track|
+    %br/
+    = track.name
+    - track.artists.each do |artist|
+      by
+      = artist.name
 
 %p
 = link_to 'logout', '/logout'
