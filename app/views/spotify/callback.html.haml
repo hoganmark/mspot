@@ -1,2 +1,8 @@
 %p
-you are connected, #{@email}
+you are connected, #{@spotify_user.email}
+
+%p
+these are your playlists:
+- @spotify_user.playlists.each do |playlist|
+  %br/
+  = playlist.name
