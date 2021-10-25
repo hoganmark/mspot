@@ -8,6 +8,13 @@ hello, #{@spotify_user.email}
 = link_to 'create a random playlist', '/create_playlist', method: :post
 
 %p
+currently playing:
+- current = @spotify_user.player.currently_playing
+= current.name
+by
+= current.artists.first.name
+
+%p
 last played:
 - last = @spotify_user.recently_played.first
 = last.name
