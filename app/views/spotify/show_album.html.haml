@@ -3,7 +3,7 @@
 %br/
 = @album.year
 %br/
-= link_to @album.artist.name, "/show_artist/#{@album.artist.id}"
+= link_to @album.artist.name, "/artist/#{@album.artist.id}"
 %br/
 - if @album.image
   = image_tag @album.image, width: 100

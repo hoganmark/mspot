@@ -19,7 +19,7 @@ hello, #{@spotify_user.email}
   My artists:
   - @user.artists.order(:name).each do |artist|
     %br/
-    = link_to artist.name, "/show_artist/#{artist.id}"
+    = link_to artist.name, "/artist/#{artist.id}"
 
 %p
 = link_to 'create a random playlist', '/create_playlist', method: :post
