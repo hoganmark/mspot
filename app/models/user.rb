@@ -35,6 +35,7 @@ class User < ApplicationRecord
         album.tracks.create! \
           uri: spotify_track.uri,
           name: spotify_track.name,
+          number: spotify_track.track_number,
           audio_features: spotify_track.audio_features
       end
 

@@ -9,7 +9,7 @@
   = image_tag @album.image, width: 100
 
 %p
-- @album.tracks.each do |track|
+- @album.tracks.order(:number).each do |track|
   %p
   = track.name
   - if track.audio_features

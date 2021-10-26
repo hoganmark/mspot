@@ -14,6 +14,7 @@ class Album < ApplicationRecord
       tracks.create! \
         uri: spotify_track.uri,
         name: spotify_track.name,
+        number: spotify_track.track_number,
         audio_features: audio_features
     end
     true

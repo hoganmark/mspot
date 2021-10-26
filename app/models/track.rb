@@ -17,4 +17,9 @@ class Track < ApplicationRecord
     self.key = %w[C C# D D# E F F# G G# A A# B][audio_features['key']] if audio_features['key']
     self.time = audio_features['time_signature'] if audio_features['time_signature']
   end
+
+  def spotify_track
+    @spotify_track ||= RSpotify::Track.find(uri.split(':').last)
+  end
+
 end
