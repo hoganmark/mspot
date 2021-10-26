@@ -1,0 +1,13 @@
+%p
+= @artist.name
+%p
+Genres:
+- @artist.genres.each do |genre|
+  %br/
+  = genre.name
+
+%p
+Albums:
+- @artist.albums.order(:name).each do |album|
+  %br/
+  = link_to album.name, "/show_album/#{album.id}"

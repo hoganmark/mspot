@@ -1,0 +1,7 @@
+%p
+= @album.name
+%p
+Tracks:
+- @album.tracks.each do |track|
+  %p
+  = track.name

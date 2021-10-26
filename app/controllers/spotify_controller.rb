@@ -40,6 +40,14 @@ class SpotifyController < ApplicationController
     redirect_to action: :index
   end
 
+  def show_artist
+    @artist = user.artists.find params[:id]
+  end
+
+  def show_album
+    @album = Album.find params[:id]
+  end
+
   private
 
   def user
