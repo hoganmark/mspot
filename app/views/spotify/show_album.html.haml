@@ -10,3 +10,11 @@
 - @album.tracks.each do |track|
   %p
   = track.name
+  %br/
+  #{track.duration}s
+  #{track.tempo}bpm
+  #{track.time}/4
+  %br/
+  #{track.key} #{track.mode.titleize}
+  - if track.acoustic
+    acoustic

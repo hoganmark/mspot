@@ -34,7 +34,8 @@ class User < ApplicationRecord
       spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}.each do |spotify_track|
         album.tracks.create! \
           uri: spotify_track.uri,
-          name: spotify_track.name
+          name: spotify_track.name,
+          audio_features: spotify_track.audio_features
       end
 
     end

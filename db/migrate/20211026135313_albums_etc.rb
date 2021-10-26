@@ -41,6 +41,13 @@ class AlbumsEtc < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :uri
       t.references :album
+      t.text :audio_features
+      t.integer :tempo
+      t.boolean :acoustic
+      t.integer :duration
+      t.integer :mode, limit: 1
+      t.string :key
+      t.integer :time
 
       t.timestamps
     end unless table_exists? :tracks

@@ -49,6 +49,13 @@ ActiveRecord::Schema.define(version: 2021_10_26_135313) do
     t.string "name"
     t.string "uri"
     t.bigint "album_id"
+    t.text "audio_features"
+    t.integer "tempo"
+    t.boolean "acoustic"
+    t.integer "duration"
+    t.integer "mode", limit: 1
+    t.string "key"
+    t.integer "time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["album_id"], name: "index_tracks_on_album_id"
