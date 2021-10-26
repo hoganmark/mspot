@@ -3,6 +3,8 @@
 %br/
 = @album.year
 %br/
+= link_to @album.artist.name, "/show_artist/#{@album.artist.id}"
+%br/
 - if @album.image
   = image_tag @album.image, width: 100
 
@@ -10,11 +12,12 @@
 - @album.tracks.each do |track|
   %p
   = track.name
-  %br/
-  #{track.duration}s
-  #{track.tempo}bpm
-  #{track.time}/4
-  %br/
-  #{track.key} #{track.mode.titleize}
-  - if track.acoustic
-    acoustic
+  - if track.audio_features
+    %br/
+    #{track.duration}s
+    #{track.tempo}bpm
+    #{track.time}/4
+    %br/
+    #{track.key} #{track.mode.titleize}
+    - if track.acoustic
+      acoustic
