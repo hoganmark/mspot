@@ -8,6 +8,6 @@ Genres:
 
 %p
 Albums:
-- @artist.albums.order(:name).each do |album|
+- @artist.albums.order(:year).each do |album|
   %br/
-  = link_to album.name, "/show_album/#{album.id}"
+  = link_to "#{album.name} (#{album.year})", "/show_album/#{album.id}"

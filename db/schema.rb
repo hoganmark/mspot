@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_10_26_135313) do
     t.string "name"
     t.string "uri"
     t.bigint "artist_id"
+    t.integer "year"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["artist_id"], name: "index_albums_on_artist_id"

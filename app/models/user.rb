@@ -27,6 +27,7 @@ class User < ApplicationRecord
 
       album = artist.albums.create!(uri: spotify_album.uri) do |al|
         al.name = spotify_album.name
+        al.year = spotify_album.release_date.split('-').first.to_i
       end
 
       spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}.each do |spotify_track|
