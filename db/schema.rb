@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_10_25_171320) do
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.text "auth_hash"
     t.datetime "created_at", precision: 6, null: false

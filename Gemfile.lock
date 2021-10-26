@@ -145,6 +145,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
+    mysql2 (0.5.3)
     netrc (0.11.0)
     nio4r (2.5.8)
     nokogiri (1.12.5-x86_64-darwin)
@@ -241,7 +242,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     temple (0.8.2)
     thor (1.1.0)
     tilt (2.0.10)
@@ -284,6 +284,7 @@ DEPENDENCIES
   haml-rails (~> 2.0)
   jbuilder (~> 2.7)
   listen (~> 3.3)
+  mysql2
   omniauth-spotify
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
@@ -292,7 +293,6 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   spring
-  sqlite3 (~> 1.4)
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
