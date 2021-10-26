@@ -12,6 +12,8 @@
 - @album.tracks.order(:number).each do |track|
   %p
   = track.name
+  - if track.popularity
+    (#{track.popularity}/100)
   - if track.audio_features
     %br/
     #{track.duration}s

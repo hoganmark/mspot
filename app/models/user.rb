@@ -36,6 +36,7 @@ class User < ApplicationRecord
           uri: spotify_track.uri,
           name: spotify_track.name,
           number: spotify_track.track_number,
+          popularity: spotify_track.popularity,
           audio_features: spotify_track.audio_features
       end
 

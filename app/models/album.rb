@@ -15,6 +15,7 @@ class Album < ApplicationRecord
         uri: spotify_track.uri,
         name: spotify_track.name,
         number: spotify_track.track_number,
+        popularity: spotify_track.popularity,
         audio_features: audio_features
     end
     true
