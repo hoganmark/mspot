@@ -16,7 +16,7 @@ hello, #{@spotify_user.email}
   = link_to 'pause', '/pause'
 
 %p
-  My aritist:
+  My artists:
   - @user.artists.order(:name).each do |artist|
     %br/
     = link_to artist.name, "/show_artist/#{artist.id}"
