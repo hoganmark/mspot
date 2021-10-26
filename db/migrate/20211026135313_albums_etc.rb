@@ -32,6 +32,7 @@ class AlbumsEtc < ActiveRecord::Migration[6.1]
       t.string :uri
       t.references :artist
       t.integer :year
+      t.string :image
 
       t.timestamps
     end unless table_exists? :albums

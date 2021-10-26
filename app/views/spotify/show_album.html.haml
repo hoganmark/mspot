@@ -2,8 +2,11 @@
 = @album.name
 %br/
 = @album.year
+%br/
+- if @album.image
+  = image_tag @album.image, width: 100
+
 %p
-Tracks:
 - @album.tracks.each do |track|
   %p
   = track.name
