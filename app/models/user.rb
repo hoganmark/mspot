@@ -47,4 +47,8 @@ class User < ApplicationRecord
 
     artist
   end
+
+  def country
+    auth_hash['country'] if auth_hash
+  end
 end
