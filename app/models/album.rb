@@ -16,7 +16,8 @@ class Album < ApplicationRecord
         name: spotify_track.name,
         number: spotify_track.track_number,
         popularity: spotify_track.popularity,
-        audio_features: audio_features
+        audio_features: audio_features,
+        url: spotify_track.external_urls&.values&.first
     end
     true
   end
