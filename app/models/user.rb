@@ -29,6 +29,7 @@ class User < ApplicationRecord
         al.name = spotify_album.name
         al.year = spotify_album.release_date.split('-').first.to_i
         al.image = spotify_album.images.first['url'] if spotify_album.images&.first
+        al.available_markets = spotify_album.available_markets
       end
 
       spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}.each do |spotify_track|

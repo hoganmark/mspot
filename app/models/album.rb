@@ -2,6 +2,8 @@ class Album < ApplicationRecord
   has_many :tracks, dependent: :destroy
   belongs_to :artist
 
+  serialize :available_markets, JSON
+
   def spotify_album
     @spotify_album ||= RSpotify::Album.find(uri.split(':').last)
   end
