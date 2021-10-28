@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :artists, through: :user_artists
   has_many :user_albums
   has_many :albums, through: :user_albums
+  has_many :tracks, through: :albums
 
   def spotify_user
     @spotify_user ||= RSpotify::User.new(auth_hash)
