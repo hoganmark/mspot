@@ -7,19 +7,22 @@ class Track < ApplicationRecord
 
   enum mode: { minor: 0, major: 1 }
 
-  scope :in_key_of, ->(key) { where(key: key) }
+  scope :key, ->(key) { where(key: key) }
   scope :time, ->(time) { where(time: time) }
 
   scope :slow, -> { where('tempo <= 110')}
-  scope :medium_pace, -> { where('tempo > 110 and tempo <= 135')}
+  scope :steady, -> { where('tempo > 110 and tempo <= 135')}
   scope :fast, -> { where('tempo > 135')}
 
   scope :short, -> { where('duration < 180') }
-  scope :medium_length, -> { where('duration >= 180 and duration < 240') }
+  scope :midlength, -> { where('duration >= 180 and duration < 240') }
   scope :long, -> { where('duration >= 240') }
 
   scope :acoustic, -> { where(acoustic: true) }
-  scope :non_acoustic, -> { where(acoustic: false) }
+  scope :plugged, -> { where(acoustic: false) }
+
+  scope :live, -> { where(live: true) }
+  scope :studio, -> { where(live: false) }
 
   scope :old, -> { joins(:album).where("albums.year < 1960") }
   scope :sixties, -> { joins(:album).where("albums.year >= 1960 and albums.year < 1970") }
@@ -38,6 +41,7 @@ class Track < ApplicationRecord
     self.mode = audio_features['mode'] if audio_features['mode']
     self.key = %w[C C# D D# E F F# G G# A A# B][audio_features['key']] if audio_features['key']
     self.time = audio_features['time_signature'] if audio_features['time_signature']
+    self.live = audio_features['liveness'] >= 0.8 if audio_features['liveness']
   end
 
   def spotify_track
