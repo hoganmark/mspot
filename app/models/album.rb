@@ -6,6 +6,10 @@ class Album < ApplicationRecord
 
   serialize :available_markets, JSON
 
+  scope :debut, -> { find_by(number: 1) }
+  scope :sophomore, -> { find_by(number: 2) }
+  scope :latest, -> { order(number: :desc).first }
+
   def spotify_album
     @spotify_album ||= RSpotify::Album.find(uri.split(':').last)
   end

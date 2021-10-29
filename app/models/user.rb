@@ -11,7 +11,7 @@ class User < ApplicationRecord
     @spotify_user ||= RSpotify::User.new(auth_hash)
   end
 
-  def add_artist(name, sleep_after_album_s = 0)
+  def add_artist(name, sleep_after_album_s = 1)
     spotify_artist = RSpotify::Artist.search(name).first
     raise 'artist not found' unless spotify_artist
 
@@ -52,6 +52,7 @@ class User < ApplicationRecord
       sleep sleep_after_album_s
     end
 
+    artist.set_album_numbers!
     artist
   end
 
