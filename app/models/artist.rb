@@ -8,4 +8,18 @@ class Artist < ApplicationRecord
   def spotify_artist
     @spotify_artist ||= RSpotify::Artist.find(uri.split(':').last)
   end
+
+  def set_album_numbers!
+    albums.update_all number: nil
+
+    albums.
+      order(:year).
+      where("name not like '%(%)%'").
+      group_by { |a| a.name }.
+      values.
+      each_with_index do |albums, i|
+        Album.where(id: albums.pluck(:id)).update_all number: i + 1
+      end
+    true
+  end
 end
