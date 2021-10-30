@@ -22,4 +22,9 @@ class Artist < ApplicationRecord
       end
     true
   end
+
+  def fix_tracks!
+    albums.each {|album| album.fix_tracks!}
+    true
+  end
 end

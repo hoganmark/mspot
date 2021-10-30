@@ -25,7 +25,7 @@ class User < ApplicationRecord
 
     user_artists.find_or_create_by!(artist: artist)
 
-    spotify_artist.albums(limit: 50).select{|al| al.artists.map(&:name) == [artist.name]}.each do |spotify_album|
+    spotify_artist.albums(limit: 50, album_type: :album).select{|al| al.artists.map(&:name) == [artist.name]}.each do |spotify_album|
       next if albums.exists? uri: spotify_album.uri
 
       album = artist.albums.find_by uri: spotify_album.uri
@@ -37,13 +37,14 @@ class User < ApplicationRecord
           al.available_markets = spotify_album.available_markets
         end
 
+        audio_features = spotify_track.audio_features rescue nil
         spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}.each do |spotify_track|
           album.tracks.create! \
             uri: spotify_track.uri,
             name: spotify_track.name,
             number: spotify_track.track_number,
             popularity: spotify_track.popularity,
-            audio_features: spotify_track.audio_features,
+            audio_features: audio_features,
             url: spotify_track.external_urls&.values&.first
         end
       end
