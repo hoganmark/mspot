@@ -20,7 +20,8 @@ class User < ApplicationRecord
     end
 
     spotify_artist.genres.each do |genre|
-      artist.genres.find_or_create_by! name: genre
+      genre = Genre.find_or_create_by! name: genre
+      artist.artist_genres.find_or_create_by! genre: genre
     end
 
     user_artists.find_or_create_by!(artist: artist)
