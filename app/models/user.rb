@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   serialize :auth_hash, JSON
 
-  has_many :user_artists
+  has_many :user_artists, dependent: :destroy
   has_many :artists, through: :user_artists
-  has_many :user_albums
+  has_many :user_albums, dependent: :destroy
   has_many :albums, through: :user_albums
   has_many :tracks, through: :albums
 
