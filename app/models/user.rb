@@ -53,7 +53,6 @@ class User < ApplicationRecord
       sleep sleep_after_album_s
     end
 
-    artist.set_album_numbers!
     artist
   end
 
