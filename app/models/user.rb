@@ -27,6 +27,7 @@ class User < ApplicationRecord
 
     spotify_artist.albums(limit: 50, album_type: :album).select{|al| al.artists.map(&:name) == [artist.name]}.each do |spotify_album|
       next if albums.exists? uri: spotify_album.uri
+      next if albums.exists? artist_id: artist.id, name: spotify_album.name
 
       album = artist.albums.find_by uri: spotify_album.uri
       unless album
