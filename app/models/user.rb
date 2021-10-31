@@ -39,8 +39,8 @@ class User < ApplicationRecord
           al.available_markets = spotify_album.available_markets
         end
 
-        audio_features = spotify_track.audio_features rescue nil
         spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}.each do |spotify_track|
+          audio_features = spotify_track.audio_features rescue nil
           album.tracks.create! \
             uri: spotify_track.uri,
             name: spotify_track.name,
