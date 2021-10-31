@@ -23,6 +23,6 @@
     #{track.key} #{track.mode.titleize}
     - if track.acoustic
       acoustic
+  - if track.url
     %br/
-    - if track.url
-      = link_to 'listen', track.url
+    = link_to 'listen', track.url
