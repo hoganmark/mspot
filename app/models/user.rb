@@ -29,6 +29,7 @@ class User < ApplicationRecord
     spotify_artist.albums(limit: 50, album_type: :album).select{|al| al.artists.map(&:name) == [artist.name]}.each do |spotify_album|
       next if albums.exists? uri: spotify_album.uri
       next if albums.exists? artist_id: artist.id, name: spotify_album.name
+      next unless spotify_album.available_markets.include? country
       next if spotify_album.album_type == 'compilation' # still getting some despite query for some reason
       next if RSpotify::Album.find(spotify_album.id).inspect.downcase['compilation']
 
@@ -52,7 +53,7 @@ class User < ApplicationRecord
             url: spotify_track.external_urls&.values&.first
         end
       end
-      user_albums.create!(album: album) if album.available_markets.include? country
+      user_albums.create!(album: album)
 
       sleep sleep_after_album_s
     end
