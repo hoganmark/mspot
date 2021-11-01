@@ -27,9 +27,10 @@ class User < ApplicationRecord
     user_artists.find_or_create_by!(artist: artist)
 
     spotify_artist.albums(limit: 50, album_type: :album).select{|al| al.artists.map(&:name) == [artist.name]}.each do |spotify_album|
-      next if spotify_album.album_type == 'compilation' # still getting some despite query for some reason
       next if albums.exists? uri: spotify_album.uri
       next if albums.exists? artist_id: artist.id, name: spotify_album.name
+      next if spotify_album.album_type == 'compilation' # still getting some despite query for some reason
+      next if RSpotify::Album.find(spotify_album.id).inspect.downcase['compilation']
 
       album = artist.albums.find_by uri: spotify_album.uri
       unless album
