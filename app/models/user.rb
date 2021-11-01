@@ -32,6 +32,8 @@ class User < ApplicationRecord
       next unless spotify_album.available_markets.include? country
       next if spotify_album.album_type == 'compilation' # still getting some despite query for some reason
       next if RSpotify::Album.find(spotify_album.id).inspect.downcase['compilation']
+      tracks = spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}
+      next if tracks.size < 6 # LPs only please
 
       album = artist.albums.find_by uri: spotify_album.uri
       unless album
@@ -42,7 +44,7 @@ class User < ApplicationRecord
           al.available_markets = spotify_album.available_markets
         end
 
-        spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}.each do |spotify_track|
+        tracks.each do |spotify_track|
           audio_features = spotify_track.audio_features rescue nil
           album.tracks.create! \
             uri: spotify_track.uri,
