@@ -1,3 +1,5 @@
+require 'csv'
+
 class Artist < ApplicationRecord
   has_many :albums, dependent: :destroy
   has_many :artist_genres, dependent: :destroy

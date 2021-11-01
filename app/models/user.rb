@@ -52,6 +52,9 @@ class User < ApplicationRecord
             audio_features: audio_features,
             url: spotify_track.external_urls&.values&.first
         end
+
+        corrected_year = Album.corrected_years[spotify_album.id]
+        album.update! year: corrected_year if corrected_year
       end
       user_albums.create!(album: album)
 

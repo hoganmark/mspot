@@ -29,4 +29,8 @@ class Album < ApplicationRecord
     end
     true
   end
+
+  def self.corrected_years
+    @corrected_years ||= CSV.open(Rails.root + 'config/corrected_release_years.csv').to_h
+  end
 end
