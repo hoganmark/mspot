@@ -28,6 +28,8 @@ class User < ApplicationRecord
 
     spotify_artist.albums(limit: 50, album_type: :album).select{|al| al.artists.map(&:name) == [artist.name]}.each do |spotify_album|
       next if albums.exists? uri: spotify_album.uri
+      upc = spotify_album.external_ids&.dig('upc')&.to_i&.to_s # remove leading zeros
+      next if upc && albums.exists?(upc: upc)
       next if albums.exists? artist_id: artist.id, name: spotify_album.name
       next unless spotify_album.available_markets.include? country
       next if spotify_album.album_type == 'compilation' # still getting some despite query for some reason
@@ -42,6 +44,7 @@ class User < ApplicationRecord
           al.year = spotify_album.release_date.split('-').first.to_i
           al.image = spotify_album.images.first['url'] if spotify_album.images&.first
           al.available_markets = spotify_album.available_markets
+          al.upc = upc
         end
 
         tracks.each do |spotify_track|
