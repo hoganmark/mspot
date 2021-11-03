@@ -1,3 +1,5 @@
+require 'csv'
+
 class Album < ApplicationRecord
   has_many :tracks, dependent: :destroy
   belongs_to :artist
@@ -35,5 +37,9 @@ class Album < ApplicationRecord
 
   def self.corrected_years
     @corrected_years ||= CSV.open(Rails.root + 'config/corrected_release_years.csv').to_h
+  end
+
+  def self.ignored_upcs
+    @ignored_upcs ||= CSV.open(Rails.root + 'config/ignored_upcs.csv').to_a.flatten
   end
 end

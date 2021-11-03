@@ -36,6 +36,7 @@ class User < ApplicationRecord
       next if RSpotify::Album.find(spotify_album.id).inspect.downcase['compilation']
       tracks = spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}
       next if tracks.size < 6 # LPs only please
+      next if upc.in? Album.ignored_upcs
 
       album = artist.albums.find_by uri: spotify_album.uri
       unless album
