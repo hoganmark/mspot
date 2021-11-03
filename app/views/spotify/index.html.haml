@@ -5,49 +5,7 @@ hello, #{@spotify_user.email} (#{@user.id})
 = link_to 'logout', '/logout'
 
 %p
-- player = @spotify_user.player
-- if player
-  %p
-  currently playing:
-  - current = @spotify_user.player.currently_playing
-  = current.name
-  by
-  = current.artists.first.name
-  = link_to 'pause', '/pause'
-
-%p
-  My artists:
-  - @user.artists.order(:name).each do |artist|
-    %br/
-    = link_to artist.name, "/artist/#{artist.id}"
-
-%p
-= link_to 'create a random playlist', '/create_playlist', method: :post
-
-%p
-last played:
-- last = @spotify_user.recently_played.first
-= last.name
-by
-= last.artists.first.name
-
-%p
-your top artists:
-- @spotify_user.top_artists.each do |artist|
+My artists:
+- @user.artists.order(:name).each do |artist|
   %br/
-  = artist.name
-
-%p
-these are your playlists:
-- @spotify_user.playlists.each do |playlist|
-  %p
-  = playlist.name
-  - playlist.tracks.each do |track|
-    %p
-    = track.name
-    %br/
-    - track.artists.each do |artist|
-      by
-      = artist.name
-    %br/
-    = link_to 'listen', track.external_urls.values.first
+  = link_to artist.name, "/artist/#{artist.id}"

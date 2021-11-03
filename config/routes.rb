@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'create_playlist', to: 'spotify#create_playlist'
   get '/pause', to: 'spotify#pause'
   get '/play', to: 'spotify#play'
+  get '/test', to: 'spotify#test'
   get '/artist/:id', to: 'spotify#show_artist'
   get '/album/:id', to: 'spotify#show_album'
 end

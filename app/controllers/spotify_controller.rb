@@ -27,6 +27,10 @@ class SpotifyController < ApplicationController
     @spotify_user = user.spotify_user
   end
 
+  def test
+    @spotify_user = user.spotify_user
+  end
+
   def create_playlist
     playlist = user.spotify_user.create_playlist! "random#{Time.current.to_i}"
     playlist.add_tracks! user.spotify_user.playlists.map(&:tracks).map(&:sample).compact
