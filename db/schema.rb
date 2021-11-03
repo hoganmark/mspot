@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_01_154103) do
+ActiveRecord::Schema.define(version: 2021_11_02_004727) do
 
   create_table "albums", charset: "utf8", force: :cascade do |t|
     t.string "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_11_01_154103) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "available_markets"
     t.string "upc"
+    t.boolean "live"
     t.index ["artist_id"], name: "index_albums_on_artist_id"
   end
 

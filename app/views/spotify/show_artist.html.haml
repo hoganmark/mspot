@@ -10,6 +10,6 @@ Genres:
 
 %p
 Albums:
-- @user.albums.where(artist_id: @artist.id).order(:year).each do |album|
+- @user.albums.studio.where(artist_id: @artist.id).order(:year).each do |album|
   %br/
   = link_to "#{album.name} (#{album.year})", "/album/#{album.id}"

@@ -10,6 +10,9 @@ class Album < ApplicationRecord
   scope :sophomore, -> { order(:year).second }
   scope :latest, -> { order(:year).last }
 
+  scope :live, -> { where(live: true) }
+  scope :studio, -> { where(live: [false, nil]) }
+
   def spotify_album
     @spotify_album ||= RSpotify::Album.find(uri.split(':').last)
   end

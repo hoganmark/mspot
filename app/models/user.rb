@@ -60,6 +60,10 @@ class User < ApplicationRecord
 
         corrected_year = Album.corrected_years[spotify_album.id]
         album.update! year: corrected_year if corrected_year
+
+        if (album.tracks.map{|t| t.audio_features&.dig('liveness')}.sum / album.tracks.count) > 0.6
+          album.update! live: true
+        end
       end
       user_albums.create!(album: album)
 
