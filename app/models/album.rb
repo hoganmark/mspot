@@ -48,7 +48,7 @@ class Album < ApplicationRecord
   end
 
   def special_suffix
-    ['deluxe', 'deluxe edition', 'bonus tracks', 'abridged'].each do |suffix|
+    ['deluxe', 'deluxe edition', 'bonus tracks', 'abridged', 'extended'].each do |suffix|
       found = ["[#{suffix}]", "(#{suffix})", "- #{suffix}"].detect do |sub_suffix|
         name.downcase.ends_with? sub_suffix
       end
