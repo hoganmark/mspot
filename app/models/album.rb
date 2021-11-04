@@ -42,4 +42,25 @@ class Album < ApplicationRecord
   def self.ignored_upcs
     @ignored_upcs ||= CSV.open(Rails.root + 'config/ignored_upcs.csv').to_a.flatten
   end
+
+  def special_edition?
+    !!special_suffix
+  end
+
+  def special_suffix
+    ['deluxe', 'deluxe edition', 'bonus tracks', 'abridged'].each do |suffix|
+      found = ["[#{suffix}]", "(#{suffix})", "- #{suffix}"].detect do |sub_suffix|
+        name.downcase.ends_with? sub_suffix
+      end
+      return found if found
+    end
+
+    return nil
+  end
+
+  def original_name
+    return nil unless special_edition?
+
+    name[0...name.length-special_suffix.length].strip
+  end
 end

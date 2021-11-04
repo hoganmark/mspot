@@ -71,7 +71,20 @@ class User < ApplicationRecord
       sleep sleep_after_album_s
     end
 
+    hide_special_editions!(artist)
     artist
+  end
+
+  def hide_special_editions!(artist)
+    user_albums.
+      joins(:album).
+      includes(:album).
+      where(albums: { artist_id: artist.id }).
+      each do |user_album|
+      user_album.hide! if user_album.album.special_edition? && albums.where(artist: artist).exists?(name: user_album.album.original_name)
+    end
+
+    true
   end
 
   def country

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_004727) do
+ActiveRecord::Schema.define(version: 2021_11_04_141243) do
 
   create_table "albums", charset: "utf8", force: :cascade do |t|
     t.string "name"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_004727) do
     t.bigint "album_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "hidden"
     t.index ["album_id"], name: "index_user_albums_on_album_id"
     t.index ["user_id"], name: "index_user_albums_on_user_id"
   end
