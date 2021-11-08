@@ -41,6 +41,7 @@ class User < ApplicationRecord
         tracks = spotify_album.tracks(limit: 50).select{|track| track.artists.map(&:name).include?(artist.name)}
         next if tracks.size < 6 # LPs only please
         next if upc.in? Album.ignored_upcs
+        next if spotify_album.name.downcase.include?('karaoke')
 
         album = artist.albums.find_by uri: spotify_album.uri
         unless album
@@ -66,7 +67,8 @@ class User < ApplicationRecord
           corrected_year = Album.corrected_years[spotify_album.id]
           album.update! year: corrected_year if corrected_year
 
-          if (album.tracks.map{|t| t.audio_features&.dig('liveness')}.compact.sum / album.tracks.count) > 0.6
+          if ((album.tracks.map{|t| t.audio_features&.dig('liveness')}.compact.sum / album.tracks.count) > 0.6) ||
+              ['live from', 'live at', '(live)'].any?{|live_part| album.name.downcase.include?(live_part) }
             album.update! live: true
           end
         end
