@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :user_albums, dependent: :destroy
   has_many :albums, through: :user_albums
   has_many :tracks, through: :albums
+  has_many :ignored_artists
 
   def spotify_user
     @spotify_user ||= RSpotify::User.new(auth_hash)
@@ -97,5 +98,10 @@ class User < ApplicationRecord
 
   def country
     auth_hash['country'] if auth_hash
+  end
+
+  def ignore_artist(name)
+    ignored_artists.create name: name
+  rescue ActiveRecord::RecordNotUnique
   end
 end
