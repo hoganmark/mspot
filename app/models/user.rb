@@ -103,4 +103,8 @@ class User < ApplicationRecord
     ignored_artists.create name: name
   rescue ActiveRecord::RecordNotUnique
   end
+
+  def create_playlists!
+    PlaylistGenerator.new(self).generate!
+  end
 end
