@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_233507) do
+ActiveRecord::Schema.define(version: 2021_11_13_172605) do
 
   create_table "albums", charset: "utf8", force: :cascade do |t|
     t.string "name"
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(version: 2021_11_08_233507) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_ignored_artists_on_name", unique: true
     t.index ["user_id"], name: "index_ignored_artists_on_user_id"
+  end
+
+  create_table "playlists", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "slug"
+    t.string "uri"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_playlists_on_user_id"
   end
 
   create_table "tracks", charset: "utf8", force: :cascade do |t|
