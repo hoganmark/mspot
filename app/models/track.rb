@@ -14,6 +14,18 @@ class Track < ApplicationRecord
   scope :steady, -> { where('tempo > 110 and tempo <= 135')}
   scope :fast, -> { where('tempo > 135')}
 
+  def slow?
+    tempo <= 110
+  end
+
+  def steady?
+    tempo > 110 and tempo <= 135
+  end
+
+  def fast?
+    tempo > 135
+  end
+
   scope :short, -> { where('duration < 180') }
   scope :midlength, -> { where('duration >= 180 and duration < 240') }
   scope :long, -> { where('duration >= 240') }

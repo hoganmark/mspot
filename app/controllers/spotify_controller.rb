@@ -38,6 +38,12 @@ class SpotifyController < ApplicationController
     redirect_to action: :index
   end
 
+  def create_playlists
+    user.create_playlists!
+
+    redirect_to action: :index
+  end
+
   def pause
     user.spotify_user.player&.pause
 

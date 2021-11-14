@@ -5,6 +5,15 @@ hello, #{@spotify_user.email} (#{@user.id})
 = link_to 'logout', '/logout'
 
 %p
+My mspot playlists:
+- @user.playlists.each do |playlist|
+  %br/
+  = link_to playlist.name, playlist.spotify_playlist.external_urls.values.first
+
+%p
+= link_to 'generate mspot playlists', '/create_playlists', method: :post
+
+%p
 My artists:
 - @user.artists.order(:name).each do |artist|
   %br/
