@@ -1,0 +1,12 @@
+%p
+
+- if @my_playlist
+  = @my_playlist.name
+  = link_to 'freeze', freeze_path(id: @my_playlist.id)
+
+  %p
+  - @my_playlist.tracks.each do |track|
+    = track.name
+    %br/
+- else
+  not found

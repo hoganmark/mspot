@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_13_172605) do
+ActiveRecord::Schema.define(version: 2022_04_03_151406) do
 
-  create_table "albums", charset: "utf8", force: :cascade do |t|
+  create_table "albums", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "uri"
     t.bigint "artist_id"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_172605) do
     t.index ["artist_id"], name: "index_albums_on_artist_id"
   end
 
-  create_table "artist_genres", charset: "utf8", force: :cascade do |t|
+  create_table "artist_genres", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "artist_id"
     t.bigint "genre_id"
     t.datetime "created_at", precision: 6, null: false
@@ -35,20 +35,29 @@ ActiveRecord::Schema.define(version: 2021_11_13_172605) do
     t.index ["genre_id"], name: "index_artist_genres_on_genre_id"
   end
 
-  create_table "artists", charset: "utf8", force: :cascade do |t|
+  create_table "artists", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "uri"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "genres", charset: "utf8", force: :cascade do |t|
+  create_table "frozen_playlists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "playlist_id"
+    t.string "frozen_playlist_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_frozen_playlists_on_user_id"
+  end
+
+  create_table "genres", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "ignored_artists", charset: "utf8", force: :cascade do |t|
+  create_table "ignored_artists", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
@@ -57,7 +66,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_172605) do
     t.index ["user_id"], name: "index_ignored_artists_on_user_id"
   end
 
-  create_table "playlists", charset: "utf8", force: :cascade do |t|
+  create_table "playlists", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.string "slug"
     t.string "uri"
@@ -66,7 +75,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_172605) do
     t.index ["user_id"], name: "index_playlists_on_user_id"
   end
 
-  create_table "tracks", charset: "utf8", force: :cascade do |t|
+  create_table "tracks", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "uri"
     t.bigint "album_id"
@@ -86,7 +95,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_172605) do
     t.index ["album_id"], name: "index_tracks_on_album_id"
   end
 
-  create_table "user_albums", charset: "utf8", force: :cascade do |t|
+  create_table "user_albums", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "album_id"
     t.datetime "created_at", precision: 6, null: false
@@ -96,7 +105,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_172605) do
     t.index ["user_id"], name: "index_user_albums_on_user_id"
   end
 
-  create_table "user_artists", charset: "utf8", force: :cascade do |t|
+  create_table "user_artists", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "artist_id"
     t.datetime "created_at", precision: 6, null: false
@@ -105,7 +114,7 @@ ActiveRecord::Schema.define(version: 2021_11_13_172605) do
     t.index ["user_id"], name: "index_user_artists_on_user_id"
   end
 
-  create_table "users", charset: "utf8", force: :cascade do |t|
+  create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.text "auth_hash"
     t.datetime "created_at", precision: 6, null: false

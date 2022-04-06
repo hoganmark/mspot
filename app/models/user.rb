@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :tracks, through: :albums
   has_many :ignored_artists
   has_many :playlists
+  has_many :frozen_playlists
 
   def spotify_user
     @spotify_user ||= RSpotify::User.new(auth_hash)

@@ -23,6 +23,7 @@ class SpotifyController < ApplicationController
     redirect_to action: :index
   end
 
+
   def index
     @spotify_user = user.spotify_user
   end
@@ -56,6 +57,28 @@ class SpotifyController < ApplicationController
 
   def show_album
     @album = Album.find params[:id]
+  end
+
+  def my_playlist
+    return if params[:q].blank?
+
+    spotify_playlist = RSpotify::Playlist.search(params[:q]).detect {|p| p.owner.id == 'spotify'}
+    @my_playlist = RSpotify::Playlist.find user.userid, spotify_playlist.id if spotify_playlist
+  end
+
+  def freeze
+    playlist = RSpotify::Playlist.find user.userid, params[:id]
+    frozen_playlist = user.frozen_playlists.find_or_create_by(playlist_id: playlist.id)
+    if frozen_playlist.frozen_playlist_id.blank?
+      spotify_frozen_playlist = user.spotify_user.create_playlist! "#{playlist.name} (frozen)"
+      frozen_playlist.update! frozen_playlist_id: spotify_frozen_playlist.id
+    else
+      spotify_frozen_playlist = RSpotify::Playlist.find user.userid, frozen_playlist.frozen_playlist_id
+    end
+
+    spotify_frozen_playlist.replace_tracks! playlist.tracks
+
+    redirect_to '/'
   end
 
   private
