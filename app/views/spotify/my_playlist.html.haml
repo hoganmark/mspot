@@ -1,12 +1,20 @@
 %p
 
-- if @my_playlist
-  = @my_playlist.name
-  = link_to 'freeze', freeze_path(id: @my_playlist.id)
+= form_tag '', method: :get do
+  search for playlist by Spotify
+  = text_field_tag 'q'
+  = submit_tag 'go'
+
+%p
+- playlist = @spotify_frozen_playlist || @spotify_playlist
+- if playlist
+  = playlist.name
+  %br/
+  = link_to "#{@spotify_frozen_playlist ? 'update' : 'create'} my playlist", freeze_path(id: @spotify_playlist.id)
 
   %p
-  - @my_playlist.tracks.each do |track|
+  - playlist.tracks.each do |track|
     = track.name
     %br/
-- else
+- elsif params[:q]
   not found

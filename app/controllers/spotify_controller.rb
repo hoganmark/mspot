@@ -60,17 +60,24 @@ class SpotifyController < ApplicationController
   end
 
   def my_playlist
-    return if params[:q].blank?
+    if params[:q].present?
+      playlist = RSpotify::Playlist.search(params[:q]).detect {|p| p.owner.id == 'spotify'}
+      @spotify_playlist = RSpotify::Playlist.find user.userid, playlist.id if playlist
+    elsif params[:id].present?
+      @spotify_playlist = RSpotify::Playlist.find user.userid, params[:id]
+    end
 
-    spotify_playlist = RSpotify::Playlist.search(params[:q]).detect {|p| p.owner.id == 'spotify'}
-    @my_playlist = RSpotify::Playlist.find user.userid, spotify_playlist.id if spotify_playlist
+    return unless @spotify_playlist
+
+    frozen_playlist = user.frozen_playlists.find_by(playlist_id: @spotify_playlist.id)
+    @spotify_frozen_playlist = RSpotify::Playlist.find user.userid, frozen_playlist.frozen_playlist_id if frozen_playlist
   end
 
   def freeze
     playlist = RSpotify::Playlist.find user.userid, params[:id]
     frozen_playlist = user.frozen_playlists.find_or_create_by(playlist_id: playlist.id)
     if frozen_playlist.frozen_playlist_id.blank?
-      spotify_frozen_playlist = user.spotify_user.create_playlist! "#{playlist.name} (frozen)"
+      spotify_frozen_playlist = user.spotify_user.create_playlist! "my #{playlist.name}"
       frozen_playlist.update! frozen_playlist_id: spotify_frozen_playlist.id
     else
       spotify_frozen_playlist = RSpotify::Playlist.find user.userid, frozen_playlist.frozen_playlist_id
@@ -78,7 +85,7 @@ class SpotifyController < ApplicationController
 
     spotify_frozen_playlist.replace_tracks! playlist.tracks
 
-    redirect_to '/'
+    redirect_to my_playlist_path id: playlist.id
   end
 
   private
