@@ -14,7 +14,17 @@
 
   %p
   - playlist.tracks.each do |track|
-    = track.name
+    #{track.name} (#{track.artists.first.name})
     %br/
+
+  %p
+  - if @spotify_frozen_playlist
+    - frozen_ids = @spotify_frozen_playlist.tracks.map(&:id)
+    - missing = @spotify_playlist.tracks.reject{|t| t.id.in?(frozen_ids)}
+    - if missing.present?
+      songs from spotify playlist not in your playlist:
+      - missing.each do |missing_track|
+        %br/
+        #{missing_track.name} (#{missing_track.artists.first.name})
 - elsif params[:q]
   not found
