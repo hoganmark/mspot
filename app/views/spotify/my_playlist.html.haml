@@ -1,5 +1,11 @@
 %p
+my playlists
+%p
+- @user.frozen_playlists.each do |frozen_playlist|
+  = link_to frozen_playlist.name, my_playlist_path(id: frozen_playlist.playlist_id)
+  %br/
 
+%p
 = form_tag '', method: :get do
   search for playlist by Spotify
   = text_field_tag 'q'

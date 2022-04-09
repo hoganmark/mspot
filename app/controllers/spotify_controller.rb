@@ -78,7 +78,7 @@ class SpotifyController < ApplicationController
     frozen_playlist = user.frozen_playlists.find_or_create_by(playlist_id: playlist.id)
     if frozen_playlist.frozen_playlist_id.blank?
       spotify_frozen_playlist = user.spotify_user.create_playlist! "my #{playlist.name}"
-      frozen_playlist.update! frozen_playlist_id: spotify_frozen_playlist.id
+      frozen_playlist.update! frozen_playlist_id: spotify_frozen_playlist.id, name: playlist.name
     else
       spotify_frozen_playlist = RSpotify::Playlist.find user.userid, frozen_playlist.frozen_playlist_id
     end

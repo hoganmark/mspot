@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_03_151406) do
+ActiveRecord::Schema.define(version: 2022_04_09_230949) do
 
   create_table "albums", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2022_04_03_151406) do
     t.string "frozen_playlist_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.index ["user_id"], name: "index_frozen_playlists_on_user_id"
   end
 
