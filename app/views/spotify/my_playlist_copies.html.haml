@@ -14,7 +14,7 @@ my playlist copies
 %p
 - playlist = @spotify_playlist_copy || @spotify_playlist
 - if playlist
-  = playlist.name
+  = link_to playlist.name, playlist.external_urls.values.first
   %br/
   = link_to "#{@spotify_playlist_copy ? 'update' : 'create'} my playlist", copy_path(id: @spotify_playlist.id)
 
