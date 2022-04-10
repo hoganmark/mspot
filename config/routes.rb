@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   get '/pause', to: 'spotify#pause'
   get '/play', to: 'spotify#play'
   get '/test', to: 'spotify#test'
-  get '/my_playlist', to: 'spotify#my_playlist'
-  get '/freeze/:id', to: 'spotify#freeze', as: :freeze
+  get '/my_playlist_copies', to: 'spotify#my_playlist_copies'
+  get '/copy/:id', to: 'spotify#copy', as: :copy
   get '/artist/:id', to: 'spotify#show_artist'
   get '/album/:id', to: 'spotify#show_album'
 end

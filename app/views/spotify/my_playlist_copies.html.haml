@@ -1,0 +1,36 @@
+%p
+my playlist copies
+%p
+- @user.playlist_copies.each do |copy|
+  = link_to copy.name, my_playlist_copies_path(id: copy.playlist_id)
+  %br/
+
+%p
+= form_tag '', method: :get do
+  search for playlist by Spotify
+  = text_field_tag 'q'
+  = submit_tag 'go'
+
+%p
+- playlist = @spotify_playlist_copy || @spotify_playlist
+- if playlist
+  = playlist.name
+  %br/
+  = link_to "#{@spotify_playlist_copy ? 'update' : 'create'} my playlist", copy_path(id: @spotify_playlist.id)
+
+  %p
+  - playlist.tracks.each do |track|
+    #{track.name} (#{track.artists.first.name})
+    %br/
+
+  %p
+  - if @spotify_playlist_copy
+    - copy_ids = @spotify_playlist_copy.tracks.map(&:id)
+    - missing = @spotify_playlist.tracks.reject{|t| t.id.in?(copy_ids)}
+    - if missing.present?
+      songs from spotify playlist not in your copy:
+      - missing.each do |missing_track|
+        %br/
+        #{missing_track.name} (#{missing_track.artists.first.name})
+- elsif params[:q]
+  not found

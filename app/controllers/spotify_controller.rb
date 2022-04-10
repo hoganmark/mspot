@@ -59,7 +59,7 @@ class SpotifyController < ApplicationController
     @album = Album.find params[:id]
   end
 
-  def my_playlist
+  def my_playlist_copies
     if params[:q].present?
       playlist = RSpotify::Playlist.search(params[:q]).detect {|p| p.owner.id == 'spotify'}
       @spotify_playlist = RSpotify::Playlist.find user.userid, playlist.id if playlist
@@ -69,23 +69,23 @@ class SpotifyController < ApplicationController
 
     return unless @spotify_playlist
 
-    frozen_playlist = user.frozen_playlists.find_by(playlist_id: @spotify_playlist.id)
-    @spotify_frozen_playlist = RSpotify::Playlist.find user.userid, frozen_playlist.frozen_playlist_id if frozen_playlist
+    copy = user.playlist_copies.find_by(playlist_id: @spotify_playlist.id)
+    @spotify_playlist_copy = RSpotify::Playlist.find user.userid, copy.playlist_copy_id if copy
   end
 
-  def freeze
+  def copy
     playlist = RSpotify::Playlist.find user.userid, params[:id]
-    frozen_playlist = user.frozen_playlists.find_or_create_by(playlist_id: playlist.id)
-    if frozen_playlist.frozen_playlist_id.blank?
-      spotify_frozen_playlist = user.spotify_user.create_playlist! "my #{playlist.name}"
-      frozen_playlist.update! frozen_playlist_id: spotify_frozen_playlist.id, name: playlist.name
+    copy = user.playlist_copies.find_or_create_by(playlist_id: playlist.id)
+    if copy.playlist_copy_id.blank?
+      spotify_playlist_copy = user.spotify_user.create_playlist! "my #{playlist.name} copy"
+      copy.update! playlist_copy_id: spotify_playlist_copy.id, name: spotify_playlist_copy.name
     else
-      spotify_frozen_playlist = RSpotify::Playlist.find user.userid, frozen_playlist.frozen_playlist_id
+      spotify_playlist_copy = RSpotify::Playlist.find user.userid, copy.playlist_copy_id
     end
 
-    spotify_frozen_playlist.replace_tracks! playlist.tracks
+    spotify_playlist_copy.replace_tracks! playlist.tracks
 
-    redirect_to my_playlist_path id: playlist.id
+    redirect_to my_playlist_copies_path id: playlist.id
   end
 
   private
