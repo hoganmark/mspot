@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/test', to: 'spotify#test'
   get '/my_playlist_copies', to: 'spotify#my_playlist_copies'
   get '/copy/:id', to: 'spotify#copy', as: :copy
+  get '/add_missing/:id', to: 'spotify#add_missing', as: :add_missing
   get '/artist/:id', to: 'spotify#show_artist'
   get '/album/:id', to: 'spotify#show_album'
 end

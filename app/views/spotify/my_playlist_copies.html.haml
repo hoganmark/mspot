@@ -32,5 +32,8 @@ my playlist copies
       - missing.each do |missing_track|
         %br/
         #{missing_track.name} (#{missing_track.artists.first.name})
+      %br/
+      = link_to "add to my copy", add_missing_path(id: @spotify_playlist.id)
+
 - elsif params[:q]
   not found

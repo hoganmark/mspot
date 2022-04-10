@@ -88,6 +88,16 @@ class SpotifyController < ApplicationController
     redirect_to my_playlist_copies_path id: playlist.id
   end
 
+  def add_missing
+    playlist = RSpotify::Playlist.find user.userid, params[:id]
+    copy = RSpotify::Playlist.find user.userid, user.playlist_copies.find_by(playlist_id: playlist.id).playlist_copy_id
+    copy_ids = copy.tracks.map(&:id)
+    missing = playlist.tracks.reject{|t| t.id.in?(copy_ids)}
+    copy.add_tracks! missing, position: 0
+
+    redirect_to my_playlist_copies_path id: playlist.id
+  end
+
   private
 
   def user
